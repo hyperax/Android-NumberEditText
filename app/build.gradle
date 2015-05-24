@@ -1,0 +1,67 @@
+apply plugin: 'com.android.library'
+apply plugin: 'maven'
+
+def currentVersion = '1.0.0'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 22
+        versionCode 1
+        versionName currentVersion
+    }
+    buildTypes {
+        release {
+            android.libraryVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def file = output.outputFile
+                    def new_file = new File(file.parent,
+                            file.name.replace('.aar', '.' + currentVersion + '.aar'))
+                    output.outputFile = new_file
+                }
+            }
+            debuggable false
+        }
+    }
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            def userHome = 'file://' + System.getProperty('user.dir') + '/maven-repo'
+            repository(url: userHome)
+
+
+            pom.project {
+                name 'NumberEditText'
+                description 'EditText that handle number input'
+                url 'https://github.com/mike-stetsenko/smartcursor'
+                groupId 'ru.softbalance.widgets'
+                artifactId 'NumberEditText'
+                packaging 'aar'
+                version currentVersion
+                licenses {
+                    license {
+                        name 'free for all'
+                        url 'http://www.softbalance.ru'
+                        distribution 'repo'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'hyperax'
+                        name 'Artur Kharchenko'
+                        email 'hyperax@gmail.com'
+                    }
+                }
+            }
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}

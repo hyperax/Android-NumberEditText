@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="NumberEditText">
+        <attr name="show_soft_input_on_focus" format="boolean" />
+        <attr name="digits_before_dot" format="integer" />
+        <attr name="digits_after_dot" format="integer" />
+    </declare-styleable>
+</resources>
