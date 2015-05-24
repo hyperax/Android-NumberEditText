@@ -13,8 +13,6 @@ import android.widget.EditText;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 
-import ru.softbalance.widgets.numberedittext.R;
-
 public class NumberEditText extends EditText {
 
     public static final int DIGITS_BEFORE_DOT = 10;
