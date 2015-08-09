@@ -65,7 +65,7 @@ public class NumberEditText extends EditText {
             inputType |= InputType.TYPE_NUMBER_FLAG_DECIMAL;
         }
         setInputType(inputType);
-        setFilters(new InputFilter[]{new NumberInputFilter(digsAfterDot, digsBeforeDot)});
+        setFilters(new InputFilter[]{new NumberInputFilter(digsBeforeDot, digsAfterDot)});
     }
 
     public void showSoftInputOnFocusCompat(boolean isShow) {

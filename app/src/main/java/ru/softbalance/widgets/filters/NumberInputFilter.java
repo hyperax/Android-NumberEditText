@@ -6,12 +6,12 @@ import android.text.Spanned;
 public class NumberInputFilter implements InputFilter {
     public static final char DECIMAL_DELIMITER = '.';
 
-    private int digsAfterDot;
     private int digsBeforeDot;
+    private int digsAfterDot;
 
-    public NumberInputFilter(int digsAfterDot, int digsBeforeDot) {
-        this.digsAfterDot = digsAfterDot;
+    public NumberInputFilter(int digsBeforeDot, int digsAfterDot) {
         this.digsBeforeDot = digsBeforeDot;
+        this.digsAfterDot = digsAfterDot;
     }
 
     @Override
@@ -39,12 +39,12 @@ public class NumberInputFilter implements InputFilter {
         // проверяем длину числа
 
         if (decInd < 0) { // случай когда разделителя нет
-            if (size > digsAfterDot) { // проверяем длину всего числа
+            if (size > digsBeforeDot) { // проверяем длину всего числа
                 isValid = false;
             }
-        } else if (decInd > digsAfterDot) {// проверяем длину целой части
+        } else if (decInd > digsBeforeDot) {// проверяем длину целой части
             isValid = false;
-        } else if (size - decInd - 1 > digsBeforeDot) { // проверяем длину дробной части
+        } else if (size - decInd - 1 > digsAfterDot) { // проверяем длину дробной части
             isValid = false;
         }
 

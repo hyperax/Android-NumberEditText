@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>ru.softbalance.widgets</groupId>
+  <artifactId>NumberEditText</artifactId>
+  <version>1.1.2</version>
+  <packaging>aar</packaging>
+  <name>NumberEditText</name>
+  <description>EditText that handle number input</description>
+  <url>https://github.com/mike-stetsenko/smartcursor</url>
+  <licenses>
+    <license>
+      <name>free for all</name>
+      <url>http://www.softbalance.ru</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>hyperax</id>
+      <name>Artur Kharchenko</name>
+      <email>hyperax@gmail.com</email>
+    </developer>
+  </developers>
+</project>
