@@ -3,15 +3,16 @@ package ru.softbalance.widgets;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
-import android.text.Editable;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.widget.EditText;
 
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
+
+import ru.softbalance.widgets.filters.NumberInputFilter;
 
 public class NumberEditText extends EditText {
 
@@ -22,8 +23,6 @@ public class NumberEditText extends EditText {
     private int digsAfterDot = DIGITS_AFTER_DOT;
 
     private boolean showSoftInputOnFocus = true;
-
-    private String previousText = "";
 
     public NumberEditText(Context context) {
         super(context);
@@ -58,7 +57,6 @@ public class NumberEditText extends EditText {
 
         showSoftInputOnFocusCompat(showSoftInputOnFocus);
         setNumberInputType();
-        setupWatcher();
     }
 
     private void setNumberInputType() {
@@ -67,6 +65,7 @@ public class NumberEditText extends EditText {
             inputType |= InputType.TYPE_NUMBER_FLAG_DECIMAL;
         }
         setInputType(inputType);
+        setFilters(new InputFilter[]{new NumberInputFilter(digsAfterDot, digsBeforeDot)});
     }
 
     public void showSoftInputOnFocusCompat(boolean isShow) {
@@ -86,54 +85,6 @@ public class NumberEditText extends EditText {
 
     public boolean isShowSoftInputOnFocus() {
         return showSoftInputOnFocus;
-    }
-
-    public void setupWatcher() {
-        addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                previousText = getText().toString();
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-            }
-        });
-    }
-
-    @Override
-    protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
-        super.onTextChanged(text, start, lengthBefore, lengthAfter);
-
-        int dotPos = -1;
-        String currentText = getText().toString();
-        int len = currentText.length();
-        for (int i = 0; i < len; i++) {
-            char c = currentText.charAt(i);
-            if (c == '.' || c == ',') {
-                dotPos = i;
-                break;
-            }
-        }
-
-        boolean incorrect = false;
-        if (dotPos == -1) {
-            if (len > digsBeforeDot) {
-                incorrect = true;
-            }
-        } else {
-            if (dotPos > digsBeforeDot || len - dotPos -1 > digsAfterDot) {
-                incorrect = true;
-            }
-        }
-
-        if (incorrect || !isValidNumberFormat(currentText)) {
-            restorePreviousText(start);
-        }
     }
 
     public boolean isValidNumberFormat(String numberText) {
@@ -164,13 +115,7 @@ public class NumberEditText extends EditText {
         return value;
     }
 
-    private void restorePreviousText(int cursorPos) {
-        setText(previousText);
-        setSelection(cursorPos);
-    }
-
     public void setValue(BigDecimal numberValue) {
-        previousText = numberValue.toPlainString();
-        setText(previousText);
+        setText(numberValue.toPlainString());
     }
 }
