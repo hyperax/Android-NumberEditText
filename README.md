@@ -16,7 +16,7 @@ just put in your layout
         app:digits_before_dot="10"
         app:show_soft_input_on_focus="false"/>
         
-... and in code
+... and retrieve result in code
 
 	BigDecimal numberValue = editText.getValue();
 
