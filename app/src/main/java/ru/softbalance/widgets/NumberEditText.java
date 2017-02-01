@@ -106,11 +106,11 @@ public class NumberEditText extends EditText {
 
     public BigDecimal getValue() {
         String text = getText().toString().trim();
-        BigDecimal value;
-        if (text.equals("")) {
-            value = BigDecimal.ZERO;
-        } else {
+        BigDecimal value = BigDecimal.ZERO;
+        try {
             value = new BigDecimal(text);
+        } catch (Exception e) {
+            // Use dafault BigDecimal.ZERO value if empty string or smth
         }
         return value;
     }
